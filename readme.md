@@ -47,14 +47,12 @@ for output in response.output:
 
 Essa é uma lista com exemplos dos tipos de outputs:
 
-```
-- reasoning: sinaliza uma etapa de raciocínio do modelo, sempre começa com um evento desse tipo.
-- file_search_call: informa a chamada da busca. O atributo "status" informa se houve sucesso ou não.
-- function_call: informa a chamada da function. O atributo "status" informa se houve sucesso ou não.
-- mcp_list_tools: devolve todas as "tools" que o mcp acessado possui.
-- mcp_call: informa a chamada do mcp. O atributo "status" informa se houve sucesso ou não.
-- message: contém a mensagem final, é sempre o último evento. 
-```
+- `reasoning`: sinaliza uma etapa de raciocínio do modelo, sempre começa com um evento desse tipo.
+- `file_search_call`: informa a chamada da busca. O atributo "status" informa se houve sucesso ou não.
+- `function_call`: informa a chamada da function. O atributo "status" informa se houve sucesso ou não.
+- `mcp_list_tools`: devolve todas as "tools" que o mcp acessado possui.
+- `mcp_call`: informa a chamada do mcp. O atributo "status" informa se houve sucesso ou não.
+- `message`: contém a mensagem final, é sempre o último evento. 
 
 Assim, dependendo da aplicação, pode ser interessante percorrer os outputs, ao invés de buscar diretamente o `output_text`.
 
@@ -104,9 +102,12 @@ Dependendo do uso, pode ser interessante receber a resposta da chamada da API no
 Para tanto, é necessário informar na chamada o layout de saída do `json`. Há duas formas disso ser feito:
 
 1. Informando o "schema", usando o parâmetro `text`.
-   (ver [example_11_struc_output_schema.ipynb](example_11_struc_output_schema.ipynb))
-2. Usando a biblioteca "Pydantic", com o parâmetro `text_format`. Nesse caso, deve-se usar o método `parse` da API.
-   (ver [example_12_struc_output_pydantic.ipynb](example_12_struc_output_pydantic.ipynb))
+
+   (ver [example_11_struc_output_schema.ipynb](example_11_struc_output_schema.ipynb))   
+
+2. Usando a biblioteca "Pydantic", com o parâmetro `text_format`. Nesse caso, deve-se usar o método `parse` da API.   
+
+   (ver [example_12_struc_output_pydantic.ipynb](example_12_struc_output_pydantic.ipynb))   
 
 # Function call
 
@@ -141,16 +142,16 @@ tools = [{
 
 Notar que é uma lista e nesse caso foi informada apenas uma função, mas poderia haver mais. Reparar também que os "parameters" seguem o mesmo padrão do "schema" dos outputs estruturados. Veja mais [aqui](https://json-schema.org/learn/getting-started-step-by-step).
 
-O parâmetro `strict: True` garante que o modelo siga exatamente o schema JSON que você definiu. Se estiver `False`, o modelo tenta seguir o schema, mas pode haver pequenas variações
+O parâmetro `strict: True` garante que o modelo siga exatamente o schema JSON que você definiu. Se estiver `False`, o modelo tenta seguir o schema, mas pode haver pequenas variações.
 
 # MCP
 
-O MCP (Model Context Protocol) é um protocolo que permite aos LLM executar funções. Ou seja, ao contrário da "function call" citada anteriormente, em que o LLM apenas identifica a função, mas não a executa, a "mcp call" permite tanto identificar quanto executar.
+O MCP (Model Context Protocol) é um protocolo que permite aos LLM executar funções. Ou seja, ao contrário da "function call" citada anteriormente, em que o LLM apenas identifica a função, mas não a executa, a "mcp call" permite tanto identificar quanto executar funções.
 
 Para tanto, deve-se passar os parâmetros do mcp:
 
 ```
- tools=[{
+tools=[{
     "type": "mcp",
     "server_label": "aloyoga",
     "server_url": "https://www.aloyoga.com/api/mcp",
